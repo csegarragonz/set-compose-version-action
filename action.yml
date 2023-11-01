@@ -19,9 +19,11 @@ runs:
     - name: "Create the installation directory"
       run: mkdir -p ${{ steps.get-install-dir.outputs.docker_config_dir }}/cli-plugins
       shell: bash
-    - name: "Install docker compose"
+    - name: "Download the docker compose binary"
       run: |
         curl -SL \
           https://github.com/docker/compose/releases/download/v${{ inputs.compose-version }}/docker-compose-linux-x86_64 \
           -o ${{ steps.get-install-dir.outputs.docker_config_dir }}/cli-plugins/docker-compose
       shell: bash
+    - name: "Make the binary executable"
+      run: chmod +x ${{ steps.get-install-dir.outputs.docker_config_dir }}/cli-plugins/docker-compose
