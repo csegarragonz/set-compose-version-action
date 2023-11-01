@@ -27,3 +27,4 @@ runs:
       shell: bash
     - name: "Make the binary executable"
       run: chmod +x ${{ steps.get-install-dir.outputs.docker_config_dir }}/cli-plugins/docker-compose
+      shell: bash
