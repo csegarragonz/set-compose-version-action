@@ -1,0 +1,25 @@
+name: "Set Docker Compose Version"
+description: "Set the docker-compose-plugin version used inside a GHA runner"
+inputs:
+  compose-version:
+    description: "Target docker compose version"
+    required: true
+    default: "2.22.0"
+defaults:
+  shell: bash
+runs:
+  using: "composite"
+  steps:
+    # TODO: check if the installed version matches the desired one
+    - name: "Remove existing docker-compose installations"
+      run: sudo apt remove docker-compose
+    - name: "Figure out the installation directory"
+      id: get-install-dir
+      run: echo "docker_config_dir=${DOCKER_CONFIG:-$HOME/.docker}" >> $GITHUB_OUTPUT
+    - name: "Create the installation directory"
+      run: mkdir -p ${{ steps.get-install-dir.outputs.docker_config_dir }}
+    - name: "Install docker compose"
+      run: |
+        curl -SL \
+          https://github.com/docker/compose/releases/download/v{{ inputs.compose-version }}/docker-compose-linux-x86_64 \
+          -o ${{ steps.get-install-dir.outputs.docker_config_dir }}/cli-plugins/docker-compose
