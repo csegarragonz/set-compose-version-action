@@ -17,7 +17,7 @@ runs:
       run: echo "docker_config_dir=${DOCKER_CONFIG:-$HOME/.docker}" >> $GITHUB_OUTPUT
       shell: bash
     - name: "Create the installation directory"
-      run: mkdir -p ${{ steps.get-install-dir.outputs.docker_config_dir }}
+      run: mkdir -p ${{ steps.get-install-dir.outputs.docker_config_dir }}/cli-plugins
       shell: bash
     - name: "Install docker compose"
       run: |
